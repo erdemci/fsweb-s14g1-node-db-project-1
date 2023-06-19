@@ -1,9 +1,14 @@
 const db = require("../../data/db-config");
 
-const getAll = () => {
+const getAll = async (limit,sortBy,sortDir) => {
   // KODLAR BURAYA
   //select * from accounts
-  return db("accounts");
+  //knex('users').orderBy('name', 'desc')
+  //knex.select('*').from('users').limit(10)
+  limit = limit || await db("accounts").length;
+  sortBy = sortBy || "id";
+  sortDir = sortDir || "asc";
+  return db("accounts").orderBy(sortBy,sortDir).limit(limit);
 }
 
 const getById = id => {

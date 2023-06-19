@@ -7,7 +7,7 @@ const mw = require("./accounts-middleware");
 router.get('/', async (req, res, next) => {
   // KODLAR BURAYA
   try {
-    const allAcounts = await accountsModel.getAll();
+    const allAcounts = await accountsModel.getAll(req.query.limit,req.query.sortBy,req.query.sortDir);
     res.json(allAcounts);
   } catch (error) {
     next(error);
@@ -22,6 +22,8 @@ router.get('/:id', mw.checkAccountId,(req, res, next) => {
     next(error);
   }
 })
+
+
 
 router.post('/',mw.checkAccountPayload,mw.checkAccountNameUnique, async (req, res, next) => {
   // KODLAR BURAYA
